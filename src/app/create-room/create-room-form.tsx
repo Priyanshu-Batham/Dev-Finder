@@ -22,7 +22,7 @@ const formSchema = z.object({
   name: z.string().min(1).max(50),
   description: z.string().min(1).max(250),
   githubRepo: z.string().min(1).max(100),
-  language: z.string().min(1).max(50),
+  tags: z.string().min(1).max(50),
 });
 
 export function CreateRoomForm() {
@@ -35,7 +35,7 @@ export function CreateRoomForm() {
       name: "",
       description: "",
       githubRepo: "",
-      language: "",
+      tags: "",
     },
   });
 
@@ -55,7 +55,7 @@ export function CreateRoomForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -93,7 +93,7 @@ export function CreateRoomForm() {
             <FormItem>
               <FormLabel>Github Repo</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} placeholder="https://github.com/username/reponame" />
               </FormControl>
               <FormDescription>
                 Please put a link to the project you're coding on
@@ -106,15 +106,15 @@ export function CreateRoomForm() {
         {/* Languages */}
         <FormField
           control={form.control}
-          name="language"
+          name="tags"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Primary Programming Language</FormLabel>
+              <FormLabel>Tags</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} placeholder="typescript, nextjs, tailwindcss"/>
               </FormControl>
               <FormDescription>
-                List the primary programming languages you're coding on
+                List your Programming languages, frameworks, libraries so people can find your room easily
               </FormDescription>
               <FormMessage />
             </FormItem>

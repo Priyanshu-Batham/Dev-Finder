@@ -110,7 +110,7 @@ export const room = pgTable("room", {
 
   name: text("name").notNull(),
   description: text("description"),
-  language: text("language").notNull(),
+  tags: text("tags").notNull(),
   githubRepo: text("githubRepo"),
 });
 //exporting the typeof room table so that we can have autosuggession from typescript :)

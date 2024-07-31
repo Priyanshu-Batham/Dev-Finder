@@ -12,6 +12,7 @@ import {
 import { Room } from "@/db/schema";
 import { GithubIcon } from "lucide-react";
 import { getRooms } from "@/data-access/rooms";
+import { splitTags, TagList } from "@/components/tag-list";
 
 const RoomCard = ({ room }: { room: Room }) => {
   return (
@@ -20,7 +21,8 @@ const RoomCard = ({ room }: { room: Room }) => {
         <CardTitle>{room.name}</CardTitle>
         <CardDescription>{room.description}</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col gap-5">
+        <TagList tags={splitTags(room.tags)}/>
         {room.githubRepo && (
           <Link
             href={room.githubRepo}
