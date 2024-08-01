@@ -12,7 +12,8 @@ import {
 import { Room } from "@/db/schema";
 import { GithubIcon } from "lucide-react";
 import { getRooms } from "@/data-access/rooms";
-import { splitTags, TagList } from "@/components/tag-list";
+import { TagList } from "@/components/tag-list";
+import { splitTags } from "@/lib/utils";
 import { SearchBar } from "./SearchBar";
 
 const RoomCard = ({ room }: { room: Room }) => {

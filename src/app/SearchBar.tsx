@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 //1. creating form schema using zod
 const formSchema = z.object({
@@ -25,6 +26,7 @@ const formSchema = z.object({
 export function SearchBar() {
   const router = useRouter();
   const query = useSearchParams();
+  const search = query.get("search");
 
   // 2. Create form object with schema and resolver
   const form = useForm<z.infer<typeof formSchema>>({
@@ -42,6 +44,10 @@ export function SearchBar() {
       router.push("/");
     }
   }
+
+  useEffect(() => {
+    form.setValue("search", search ?? "");
+  }, [search, form]);
 
   return (
     <Form {...form}>
@@ -69,10 +75,14 @@ export function SearchBar() {
         </Button>
 
         {query.get("search") && (
-            <Button onClick={()=>{
-                form.setValue("search", "");
-                router.push("/");
-            }}>Clear</Button>
+          <Button
+            onClick={() => {
+              form.setValue("search", "");
+              router.push("/");
+            }}
+          >
+            Clear
+          </Button>
         )}
       </form>
     </Form>

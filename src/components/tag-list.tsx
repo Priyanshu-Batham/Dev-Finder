@@ -1,13 +1,21 @@
+"use client";
+import { useRouter } from "next/navigation";
 import { Badge } from "./ui/badge";
 
-export function splitTags(tags: string){
-    return tags.split(",").map((lang) => lang.trim());
-}
 export function TagList({ tags }: { tags: string[] }) {
+  const router = useRouter();
   return (
     <div className="flex flex-wrap gap-2">
       {tags.map((tag) => (
-        <Badge key={tag} className="w-fit">
+        <Badge
+          onClick={() => {
+            router.push(`/?search=${tag}`);
+          }}
+          key={tag}
+          className="w-fit cursor-pointer"
+          tabIndex={0}
+          role="button"
+        >
           {tag}
         </Badge>
       ))}
