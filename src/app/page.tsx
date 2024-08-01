@@ -13,6 +13,7 @@ import { Room } from "@/db/schema";
 import { GithubIcon } from "lucide-react";
 import { getRooms } from "@/data-access/rooms";
 import { splitTags, TagList } from "@/components/tag-list";
+import { SearchBar } from "./SearchBar";
 
 const RoomCard = ({ room }: { room: Room }) => {
   return (
@@ -22,7 +23,7 @@ const RoomCard = ({ room }: { room: Room }) => {
         <CardDescription>{room.description}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-5">
-        <TagList tags={splitTags(room.tags)}/>
+        <TagList tags={splitTags(room.tags)} />
         {room.githubRepo && (
           <Link
             href={room.githubRepo}
@@ -42,8 +43,12 @@ const RoomCard = ({ room }: { room: Room }) => {
     </Card>
   );
 };
-export default async function Home() {
-  const rooms = await getRooms();
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { search: string };
+}) {
+  const rooms = await getRooms(searchParams.search);
   return (
     <main className="min-h-screen py-16 container mx-auto">
       <div className="flex justify-between items-center mb-8">
@@ -52,6 +57,11 @@ export default async function Home() {
           <Link href={"/create-room"}>Create Room</Link>
         </Button>
       </div>
+
+      <div className="mb-12">
+        <SearchBar />
+      </div>
+
       <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1 max-md:grid-cols-2">
         {rooms.map((room) => (
           <RoomCard key={room.id} room={room} />
