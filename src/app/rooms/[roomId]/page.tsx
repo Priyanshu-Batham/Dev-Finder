@@ -4,12 +4,14 @@ import { getRoom } from "@/data-access/rooms";
 import { GithubIcon } from "lucide-react";
 import Link from "next/link";
 import { DevFinderVideo } from "./video-player";
+import { unstable_noStore } from "next/cache";
 
 export default async function RoomPage({
   params,
 }: {
   params: { roomId: string };
 }) {
+  unstable_noStore();
   const roomId = params.roomId;
   const room = await getRoom(roomId);
   if (!room) return <div>No Room Found</div>;

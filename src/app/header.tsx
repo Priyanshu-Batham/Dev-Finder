@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogInIcon, LogOutIcon } from "lucide-react";
+import { LogInIcon, LogOutIcon, SchoolIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import Link from "next/link";
@@ -56,6 +56,14 @@ export function Header() {
           />
           <h1>DEV FINDER</h1>
         </Link>
+
+        <nav>
+          <Link 
+          className="text-xl hover:text-gray-400 flex gap-2"
+          href="your-rooms">Your Rooms
+          <SchoolIcon />
+          </Link>
+        </nav>
 
         <div className="flex items-center gap-4">
           {session.data && 
