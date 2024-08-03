@@ -9,6 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Room } from "@/db/schema";
+import { GithubIcon, PencilIcon, TrashIcon } from "lucide-react";
+import { TagList } from "@/components/tag-list";
+import { splitTags } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,18 +24,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
-import { Room } from "@/db/schema";
-import { GithubIcon, PencilIcon, TrashIcon } from "lucide-react";
-import { TagList } from "@/components/tag-list";
-import { splitTags } from "@/lib/utils";
 import { deleteRoomAction } from "./actions";
 
 export function UserRoomCard({ room }: { room: Room }) {
   return (
     <Card>
       <CardHeader className="relative">
-        <Button className="absolute top-3 right-3" size={"icon"}>
+        <Button className="absolute top-2 right-2" size="icon">
           <Link href={`/edit-room/${room.id}`}>
             <PencilIcon />
           </Link>
@@ -39,40 +38,36 @@ export function UserRoomCard({ room }: { room: Room }) {
         <CardTitle>{room.name}</CardTitle>
         <CardDescription>{room.description}</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col gap-5">
+      <CardContent className="flex flex-col gap-4">
         <TagList tags={splitTags(room.tags)} />
         {room.githubRepo && (
           <Link
             href={room.githubRepo}
-            target="_blank"
             className="flex items-center gap-2"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <GithubIcon />
             Github Project
           </Link>
         )}
       </CardContent>
-
-      {/* Join Button */}
       <CardFooter className="flex gap-2">
         <Button asChild>
           <Link href={`/rooms/${room.id}`}>Join Room</Link>
         </Button>
 
-        {/* Confirmation before deleting */}
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            {/* Delete Button */}
             <Button variant={"destructive"}>
-              <TrashIcon className="mr-2 w-5 h-5" />
-              Delete Room
+              <TrashIcon className="w-4 h-4 mr-2" /> Delete Room
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete your
+                This action cannot be undone. This will permanently remove the
                 room and any data associated with it.
               </AlertDialogDescription>
             </AlertDialogHeader>
@@ -83,7 +78,7 @@ export function UserRoomCard({ room }: { room: Room }) {
                   deleteRoomAction(room.id);
                 }}
               >
-                Yes, Delete
+                Yes, delete
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
