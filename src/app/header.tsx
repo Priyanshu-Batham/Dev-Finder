@@ -33,10 +33,10 @@ function AccountDropdown() {
       <DropdownMenuContent>
         <DropdownMenuSeparator />
 
-          <DropdownMenuItem onClick={() => signOut({callbackUrl: "/"})}>
-            <LogOutIcon className="mr-2" />
-            Sign Out
-          </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
+          <LogOutIcon className="mr-2" />
+          Sign Out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -44,8 +44,9 @@ function AccountDropdown() {
 
 export function Header() {
   const session = useSession();
+  const isLoggedIn = !!session.data;
   return (
-    <header className="bg-gray-100 dark:bg-gray-900 container mx-auto py-2">
+    <header className="bg-gray-100 dark:bg-gray-900 container mx-auto py-2 z-10 relative">
       <div className="flex justify-between items-center">
         <Link href="/" className="flex gap-5 items-center text-xl font-bold">
           <Image
@@ -58,18 +59,30 @@ export function Header() {
         </Link>
 
         <nav>
-          <Link 
-          className="text-xl hover:text-gray-400 flex gap-2"
-          href="your-rooms">Your Rooms
-          <SchoolIcon />
-          </Link>
+          {isLoggedIn && (
+            <div className="flex gap-2">
+              <Link
+                className="text-xl hover:text-gray-400 flex gap-2"
+                href="/browse"
+              >
+                Browse
+              </Link>
+
+              <Link
+                className="text-xl hover:text-gray-400 flex gap-2"
+                href="your-rooms"
+              >
+                Your Rooms
+                <SchoolIcon />
+              </Link>
+            </div>
+          )}
         </nav>
 
         <div className="flex items-center gap-4">
-          {session.data && 
-          <AccountDropdown />}
-          {!session.data && (
-            <Button onClick={()=> signIn("google")}>
+          {isLoggedIn && <AccountDropdown />}
+          {!isLoggedIn && (
+            <Button onClick={() => signIn("google")}>
               <LogInIcon className="mr-2" /> SignIn
             </Button>
           )}

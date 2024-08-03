@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import { Room } from "@/db/schema";
-import { GithubIcon, TrashIcon } from "lucide-react";
+import { GithubIcon, PencilIcon, TrashIcon } from "lucide-react";
 import { TagList } from "@/components/tag-list";
 import { splitTags } from "@/lib/utils";
 import { deleteRoomAction } from "./actions";
@@ -30,7 +30,12 @@ import { deleteRoomAction } from "./actions";
 export function UserRoomCard({ room }: { room: Room }) {
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="relative">
+        <Button className="absolute top-3 right-3" size={"icon"}>
+          <Link href={`/edit-room/${room.id}`}>
+            <PencilIcon />
+          </Link>
+        </Button>
         <CardTitle>{room.name}</CardTitle>
         <CardDescription>{room.description}</CardDescription>
       </CardHeader>
@@ -73,9 +78,11 @@ export function UserRoomCard({ room }: { room: Room }) {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => {
-                deleteRoomAction(room.id)
-              }}>
+              <AlertDialogAction
+                onClick={() => {
+                  deleteRoomAction(room.id);
+                }}
+              >
                 Yes, Delete
               </AlertDialogAction>
             </AlertDialogFooter>
