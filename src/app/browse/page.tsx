@@ -15,7 +15,7 @@ export default async function Home({
   const rooms = await getRooms(searchParams.search);
   return (
     <main className="min-h-screen max-sm:p-5 ">
-      <h1 className="sm:hidden my-4 text-red-500">Please use a Pc or Laptop to Join Rooms</h1>
+      {/* <h1 className="sm:hidden my-4 text-red-500">Please use a Pc or Laptop to Join Rooms</h1> */}
       <div className="flex justify-between items-center mb-8 sm:mt-8">
         <h1 className="text-4xl">Find Dev Rooms</h1>
         <Button asChild>

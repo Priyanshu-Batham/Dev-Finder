@@ -11,7 +11,7 @@ export default async function YourRoomsPage() {
 
   return (
     <main className="min-h-screen max-sm:p-5 p-16">
-      <h1 className="sm:hidden my-4 text-red-500">Please use a Pc or Laptop to Join Rooms</h1>
+      {/* <h1 className="sm:hidden my-4 text-red-500">Please use a Pc or Laptop to Join Rooms</h1> */}
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl">Your Rooms</h1>
         <Button asChild>
