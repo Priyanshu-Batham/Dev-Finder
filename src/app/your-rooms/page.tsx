@@ -10,7 +10,8 @@ export default async function YourRoomsPage() {
   const rooms = await getUserRooms();
 
   return (
-    <main className="min-h-screen p-16">
+    <main className="min-h-screen max-sm:p-5 p-16">
+      <h1 className="sm:hidden my-4 text-red-500">Please use a Pc or Laptop to Join Rooms</h1>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl">Your Rooms</h1>
         <Button asChild>
@@ -18,7 +19,7 @@ export default async function YourRoomsPage() {
         </Button>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1 max-md:grid-cols-2">
         {rooms.map((room) => {
           return <UserRoomCard key={room.id} room={room} />;
         })}
