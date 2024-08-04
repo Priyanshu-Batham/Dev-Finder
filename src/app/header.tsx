@@ -6,7 +6,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -25,6 +24,7 @@ import {
   LogInIcon,
   LogOutIcon,
   SchoolIcon,
+  SearchIcon,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
@@ -38,6 +38,7 @@ function AccountDropdown() {
 
   return (
     <>
+      {/* Delete Account Confirmation */}
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -49,28 +50,53 @@ function AccountDropdown() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={async () => {
-              await deleteAccountAction();
-              signOut({callbackUrl: "/"})
-            }}>
+            <AlertDialogAction
+              onClick={async () => {
+                await deleteAccountAction();
+                signOut({ callbackUrl: "/" });
+              }}
+            >
               Yes, delete my account
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
+      {/* Actual Dropdown Menu */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant={"secondary"}>
-            <Avatar className="mr-2">
+            <Avatar className="sm:mr-2">
               <AvatarImage src={session.data?.user.image ?? ""} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
 
-            {session.data?.user?.name}
+            <div className="max-sm:hidden">{session.data?.user?.name}</div>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+          <Link href="/browse">
+            <DropdownMenuItem className="sm:hidden">
+              <div className="hover:text-gray-400 flex gap-2">
+                <SearchIcon />
+                Browse
+              </div>
+            </DropdownMenuItem>
+          </Link>
+
+          <DropdownMenuSeparator />
+
+          <Link href="/your-rooms">
+            <DropdownMenuItem className="sm:hidden">
+              <div className="hover:text-gray-400 flex gap-2">
+                <SchoolIcon />
+                Your Rooms
+              </div>
+            </DropdownMenuItem>
+          </Link>
+
+          <DropdownMenuSeparator />
+
           <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
             <LogOutIcon className="mr-2" />
             Sign Out
@@ -94,6 +120,7 @@ export function Header() {
   return (
     <header className="bg-gray-100 dark:bg-gray-900 py-2 z-10 relative">
       <div className="flex justify-between items-center  container mx-auto">
+        {/* Dev Finder Heading and Icon */}
         <Link href="/" className="flex gap-5 items-center text-xl font-bold">
           <Image
             src={"/icon.png"}
@@ -101,16 +128,18 @@ export function Header() {
             width={50}
             alt="App icon of a magnifying glass"
           />
-          <h1>DEV FINDER</h1>
+          <h1 className="max-sm:hidden">DEV FINDER</h1>
         </Link>
 
-        <nav>
+        {/* Browse and Your Rooms links */}
+        <nav className="max-sm:hidden">
           {isLoggedIn && (
-            <div className="flex gap-2">
+            <div className="flex gap-8">
               <Link
                 className="text-xl hover:text-gray-400 flex gap-2"
                 href="/browse"
               >
+                <SearchIcon />
                 Browse
               </Link>
 
@@ -118,20 +147,22 @@ export function Header() {
                 className="text-xl hover:text-gray-400 flex gap-2"
                 href="/your-rooms"
               >
-                Your Rooms
                 <SchoolIcon />
+                Your Rooms
               </Link>
             </div>
           )}
         </nav>
 
-        <div className="flex items-center gap-4">
+        {/* Account Dropdown and Mode Toggle */}
+        <div className="flex items-center gap-4 max-sm:gap-2">
           {isLoggedIn && <AccountDropdown />}
           {!isLoggedIn && (
             <Button onClick={() => signIn("google")}>
               <LogInIcon className="mr-2" /> SignIn
             </Button>
           )}
+
           <ModeToggle />
         </div>
       </div>
